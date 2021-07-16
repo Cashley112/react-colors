@@ -2,19 +2,8 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/styles';
 import ColorBox from './ColorBox';
 import PaletteFooter from './PaletteFooter';
-import './Palette.css';
 import Navbar from './Navbar';
-
-const styles = {
-    palette: {
-        height: '100vh',
-        display: 'flex',
-        flexDirection: 'column'
-    },
-    colors: {
-        height: '90%'
-    }
-}
+import styles from './styles/PaletteStyles';
 
 class Palette extends Component {
     constructor(props) {
