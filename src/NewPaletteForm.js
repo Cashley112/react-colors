@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { ChromePicker } from 'react-color';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -11,8 +12,9 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import Button from '@material-ui/core/Button'
 
-const drawerWidth = 240;
+const drawerWidth = 400;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -104,7 +106,7 @@ export default function NewPaletteForm() {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap>
-              Persistent drawer
+              Create A Palette
             </Typography>
           </Toolbar>
         </AppBar>
@@ -124,6 +126,23 @@ export default function NewPaletteForm() {
           </div>
           <Divider />
           <Divider />
+          <Typography variant='h4'>
+            Design Your Palette
+          </Typography>
+          <div>
+            <Button variant='contained' color='secondary'>
+              Clear Palette
+            </Button>
+            <Button variant='contained' color='primary'>
+              Random Color
+            </Button>
+          </div>
+          <ChromePicker
+            onChangeComplete={newColor => console.log(newColor)}
+          />
+          <Button variant='contained' color='primary'>
+            Add Color
+          </Button>
         </Drawer>
         <main
           className={clsx(classes.content, {
@@ -131,6 +150,7 @@ export default function NewPaletteForm() {
           })}
         >
           <div className={classes.drawerHeader} />
+
         </main>
       </div>
     );
