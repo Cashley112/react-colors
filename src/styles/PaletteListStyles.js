@@ -2,6 +2,7 @@ const styles = {
     root: {
         backgroundColor: 'blue',
         height: '100vh',
+        overflowY: 'scroll',
         display: 'flex',
         alignItems: 'flex-start',
         justifyContent: 'center'
