@@ -76,6 +76,15 @@ const useStyles = makeStyles((theme) => ({
     }),
     marginLeft: 0,
   },
+  navForm: {
+    marginLeft: 'auto',
+    '& div': {
+      margin: 'auto'
+    },
+    '& button': {
+      margin: 'auto'
+    }
+  }
 }));
 
 export default function NewPaletteForm(props) {
@@ -136,6 +145,10 @@ export default function NewPaletteForm(props) {
       props.history.push('/');
     }
 
+    const removeColor = name => {
+      setColors(colors.filter(color => color.name !== name))
+    }
+
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -159,22 +172,28 @@ export default function NewPaletteForm(props) {
             <Typography variant="h6" noWrap>
               Create A Palette
             </Typography>
-            <ValidatorForm onSubmit={savePalette}>
-              <TextValidator 
-                label='Palette Name'
-                value={newPaletteName}
-                onChange={handleChangePaletteName}
-                validators={['required', 'isPaletteNameUnique']}
-                errorMessages={['Enter Palette Name', 'Palette Name Must Be Unique']}
-              />
-              <Button 
-                variant='contained'
-                type='submit' 
-                color='primary'
-              >
-                  Save Palette
-              </Button>
-            </ValidatorForm>
+            <div className={classes.navForm}>
+              <ValidatorForm onSubmit={savePalette}>
+                <div>
+                <TextValidator 
+                  label='Palette Name'
+                  value={newPaletteName}
+                  onChange={handleChangePaletteName}
+                  validators={['required', 'isPaletteNameUnique']}
+                  errorMessages={['Enter Palette Name', 'Palette Name Must Be Unique']}
+                />
+                </div>
+                <div>
+                <Button 
+                  variant='contained'
+                  type='submit' 
+                  color='primary'
+                >
+                    Save Palette
+                </Button>
+                </div>
+              </ValidatorForm>
+            </div>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -216,13 +235,13 @@ export default function NewPaletteForm(props) {
               errorMessages={['this field is required', 'color name must be unique', 'color already used']}
             />
             <Button 
-            variant='contained'
-            type='submit' 
-            color='primary' 
-            style={{ backgroundColor: currColor }} 
-          >
-            Add Color
-          </Button>
+              variant='contained'
+              type='submit' 
+              color='primary' 
+              style={{ backgroundColor: currColor }} 
+            >
+              Add Color
+            </Button>
           </ValidatorForm>
         </Drawer>
         <main
@@ -235,6 +254,8 @@ export default function NewPaletteForm(props) {
             <DraggableColorBox
               color={color.color}
               name={color.name}
+              key={color.name}
+              removeColor={removeColor}
             />
           ))}
         </main>
