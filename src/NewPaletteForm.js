@@ -1,8 +1,5 @@
-import React, { useEffect } from 'react';
-import { ChromePicker } from 'react-color';
-import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import React from 'react';
 import { arrayMove } from 'react-sortable-hoc';
-import PaletteFormNav from './PaletteFormNav';
 
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -15,29 +12,14 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Button from '@material-ui/core/Button'
 
 import DraggableColorList from './DraggableColorList';
+import PaletteFormNav from './PaletteFormNav';
+import ColorPickerForm from './ColorPickerForm';
 
 const drawerWidth = 400;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-  },
-  appBar: {
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
   },
   hide: {
     display: 'none',
@@ -98,17 +80,6 @@ export default function NewPaletteForm(props) {
       maxColors: 20
     }
     const paletteIsFull = colors.length >= defaultConfig.maxColors;
-
-    useEffect(() => {
-      ValidatorForm.addValidationRule('isColorNameUnique', value => 
-        colors.every(
-          ({ name }) => name.toLowerCase() !== value.toLowerCase()
-        ));
-      ValidatorForm.addValidationRule('isColorUnique', value => 
-        colors.every(
-          ({ color }) => color !== currColor
-        ));
-    });
   
     const handleDrawerOpen = () => {
       setOpen(true);
@@ -118,19 +89,6 @@ export default function NewPaletteForm(props) {
       setOpen(false);
     };
   
-    const updateCurrColor = newColor => {
-      setColor(newColor.hex);
-    }
-
-    const addNewColor = () => {
-      setColors([ ...colors, { color: currColor, name: newName } ]);
-      setName('');
-    }
-
-    const handleChangeColorName = evt => {
-      setName(evt.target.value);
-    }
-
     const removeColor = name => {
       setColors(colors.filter(color => color.name !== name))
     }
@@ -156,7 +114,6 @@ export default function NewPaletteForm(props) {
           open={open}
           handleDrawerOpen={handleDrawerOpen}
           colors={colors}
-          classes={classes}
           history={props.history}
           savePalette={props.savePalette}
           palettes={props.palettes}
@@ -197,27 +154,14 @@ export default function NewPaletteForm(props) {
               Random Color
             </Button>
           </div>
-          <ChromePicker
-            color={currColor}
-            onChangeComplete={updateCurrColor}
+          <ColorPickerForm 
+            maxColors={defaultConfig.maxColors}
+            colors={colors}
+            setColors={setColors}
+            currColor={currColor}
+            newName={newName}
+            paletteIsFull={paletteIsFull}
           />
-          <ValidatorForm onSubmit={addNewColor}>
-            <TextValidator 
-              value={newName} 
-              onChange={handleChangeColorName} 
-              validators={['required', 'isColorNameUnique', 'isColorUnique']}
-              errorMessages={['this field is required', 'color name must be unique', 'color already used']}
-            />
-            <Button 
-              variant='contained'
-              type='submit' 
-              color='primary' 
-              style={{ backgroundColor: paletteIsFull ? 'grey' : currColor }} 
-              disabled={paletteIsFull}
-            >
-              {paletteIsFull ? 'Palette Full' : 'Add Color'}
-            </Button>
-          </ValidatorForm>
         </Drawer>
         <main
           className={clsx(classes.content, {

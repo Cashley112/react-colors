@@ -11,10 +11,43 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Button from '@material-ui/core/Button'
 
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+
+const drawerWidth = 400;
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex'
+  },
+  appBar: {
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  appBarShift: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  navBtns: {
+
+  }
+}))
 
 
-function PaletteFormNav(props) {
-    const { classes, open, handleDrawerOpen, colors } = props;
+export default function PaletteFormNav(props) {
+    const classes = useStyles();
+    const theme = useTheme();
+    const { open, handleDrawerOpen, colors } = props;
     const [newPaletteName, setPaletteName] = React.useState('');
 
     useEffect(() => {
@@ -39,7 +72,7 @@ function PaletteFormNav(props) {
     }
 
     return(
-        <div>
+        <div className={classes.root}>
           <CssBaseline />
           <AppBar
             position="fixed"
@@ -61,6 +94,8 @@ function PaletteFormNav(props) {
               <Typography variant="h6" noWrap>
                 Create A Palette
               </Typography>
+            </Toolbar>
+            <div className={classes.navBtns}>
               <ValidatorForm onSubmit={savePalette}>
                   <TextValidator 
                     label='Palette Name'
@@ -76,7 +111,8 @@ function PaletteFormNav(props) {
                   >
                       Save Palette
                   </Button>
-                  <Link to='/'>
+              </ValidatorForm>
+              <Link to='/'>
                     <Button 
                       variant='contained'
                       color='secondary'
@@ -84,11 +120,9 @@ function PaletteFormNav(props) {
                         Go Back
                     </Button>
                   </Link>
-              </ValidatorForm>
-            </Toolbar>
+              </div>
           </AppBar>
         </div>
     )
 }
 
-export default PaletteFormNav;
