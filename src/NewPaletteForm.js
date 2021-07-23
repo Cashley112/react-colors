@@ -99,7 +99,7 @@ export default function NewPaletteForm(props) {
     const removeColor = name => {
       setColors(colors.filter(color => color.name !== name))
     }
-
+    // drag and drop method
     const onSortEnd = ({oldIndex, newIndex}) => {
       setColors(arrayMove(colors, oldIndex, newIndex))
     };

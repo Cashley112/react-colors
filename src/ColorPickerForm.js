@@ -6,9 +6,12 @@ import { withStyles } from '@material-ui/styles';
 import Button from '@material-ui/core/Button'
 
 const styles = {
+    root: {
+        width: '100%'
+    },
     picker: {
         // refactor
-        width: '100%',
+        width: '100% !important',
         marginTop: '2rem'
     },
     addColor: {
@@ -53,7 +56,7 @@ function ColorPickerForm(props) {
       }
 
     return(
-        <div>
+        <div className={classes.root}>
             <ChromePicker
                 color={currColor}
                 onChangeComplete={updateCurrColor}
