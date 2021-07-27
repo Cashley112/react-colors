@@ -26,7 +26,8 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -40,7 +41,13 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   navBtns: {
-
+    marginRight: '1rem',
+    '& a': {
+      textDecoration: 'none'
+    }
+  },
+  button: {
+    margin: '0 0.5rem',
   }
 }))
 
@@ -49,6 +56,11 @@ export default function PaletteFormNav(props) {
     const classes = useStyles();
     const theme = useTheme();
     const { open, handleDrawerOpen } = props;
+    const [isDialogOpen, setDialogOpen ] = React.useState(false)
+
+    const showForm = () => {
+      setDialogOpen(true)
+    }
 
     return(
         <div className={classes.root}>
@@ -75,22 +87,33 @@ export default function PaletteFormNav(props) {
               </Typography>
             </Toolbar>
             <div className={classes.navBtns}>
-              <PaletteMetaForm 
-                colors={props.colors}
-                palettes={props.palettes}
-                history={props.history}
-                savePalette={props.savePalette}
-              />
               <Link to='/'>
                     <Button 
                       variant='contained'
                       color='secondary'
+                      className={classes.button}
                     >
                         Go Back
                     </Button>
-                  </Link>
-              </div>
+              </Link>
+              <Button 
+                variant="contained" 
+                color="primary" 
+                onClick={showForm}
+                className={classes.button}
+              >
+                   Save
+              </Button>
+            </div>
           </AppBar>
+          {isDialogOpen && (
+            <PaletteMetaForm 
+              colors={props.colors}
+              palettes={props.palettes}
+              history={props.history}
+              savePalette={props.savePalette}
+           />
+          )}
         </div>
     )
 }
