@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 import clsx from 'clsx';
@@ -11,7 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Button from '@material-ui/core/Button'
 
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import PaletteMetaForm from './PaletteMetaForm';
 
 const drawerWidth = 400;
@@ -54,14 +53,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PaletteFormNav(props) {
     const classes = useStyles();
-    const theme = useTheme();
     const { open, handleDrawerOpen } = props;
     const [isDialogOpen, setDialogOpen ] = React.useState(false)
 
     const showForm = () => {
       setDialogOpen(true)
     }
-
+    const hideForm = () => {
+      setDialogOpen(false)
+    }
     return(
         <div className={classes.root}>
           <CssBaseline />
@@ -112,6 +112,7 @@ export default function PaletteFormNav(props) {
               palettes={props.palettes}
               history={props.history}
               savePalette={props.savePalette}
+              hideForm={hideForm}
            />
           )}
         </div>
