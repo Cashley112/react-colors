@@ -11,7 +11,7 @@ import {Picker} from 'emoji-mart';
 
 export default function PaletteMetaForm(props) {
     const { colors, hideForm } = props;
-    const [open, setOpen] = React.useState(true);
+    const [stage, setStage] = React.useState('form')
     const [newPaletteName, setPaletteName] = React.useState('');
 
     useEffect(() => {
@@ -24,10 +24,13 @@ export default function PaletteMetaForm(props) {
     const handleChangePaletteName = evt => {
         setPaletteName(evt.target.value);
       }
-  
-    const savePalette = () => {
+    const showEmojiPicker = () => {
+        setStage('emoji')
+    }
+    const savePalette = newEmoji => {
         const newPalette = {
             paletteName: newPaletteName,
+            emoji: newEmoji.native,
             id: newPaletteName.toLowerCase().replace(/ /g, '-'), 
             colors
         }
@@ -36,14 +39,23 @@ export default function PaletteMetaForm(props) {
     }
 
     return (
-            <Dialog open={open} onClose={hideForm} aria-labelledby="form-dialog-title">
+        <div>
+            <Dialog open={stage === 'emoji'} onClose={hideForm}>
+                <DialogTitle id='form-dialog-title'>
+                    Choose a Palette Name
+                </DialogTitle>
+                <Picker
+                    onSelect={savePalette}
+                    title='Pick a Palette Emoji'
+                 />
+            </Dialog>
+            <Dialog open={stage === 'form'} onClose={hideForm} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Choose A Palette Name</DialogTitle>
-                <ValidatorForm onSubmit={savePalette}>
+                <ValidatorForm onSubmit={showEmojiPicker}>
                 <DialogContent>
                 <DialogContentText>
                     Please Enter A Name for Your New, Beautiful Palette. Make Sure It Is Unique!
                 </DialogContentText>
-                  <Picker />
                   <TextValidator 
                     label='Palette Name'
                     value={newPaletteName}
@@ -68,5 +80,6 @@ export default function PaletteMetaForm(props) {
                 </DialogActions>
                 </ValidatorForm>
             </Dialog>
+        </div>
     )
 }
