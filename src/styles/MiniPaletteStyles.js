@@ -51,7 +51,7 @@ const styles = {
         top: '0px',
         padding: '10px',
         zIndex: '10',
-        opacity: 0,
+        opacity: '0',
         transition: 'all 0.3s ease-in-out'
     }
 };
