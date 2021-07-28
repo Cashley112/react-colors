@@ -1,5 +1,6 @@
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { DRAWER_WIDTH } from '../constants';
+import sizes from './sizes';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
     width: DRAWER_WIDTH,
     display: 'flex',
     alignItems: 'center',
+    [sizes.down('xs')]: {
+      width: '100%'
+    }
   },
   drawerHeader: {
     display: 'flex',
