@@ -14,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     alignItems: 'center'
   },
+  hide: {
+    display: 'none',
+  },
   appBarShift: {
     width: `calc(100% - ${DRAWER_WIDTH}px)`,
     marginLeft: DRAWER_WIDTH,

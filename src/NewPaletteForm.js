@@ -2,7 +2,7 @@ import React from 'react';
 import { arrayMove } from 'react-sortable-hoc';
 
 import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -20,9 +20,9 @@ export default function NewPaletteForm(props) {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
-    const [currColor, setColor] = React.useState('teal');
+    const [currColor] = React.useState('teal');
     const [colors, setColors] = React.useState(props.palettes[0].colors);
-    const [newName, setName] = React.useState('');
+    const [newName] = React.useState('');
     
 
     const defaultConfig = {
