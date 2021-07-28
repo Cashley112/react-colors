@@ -12,10 +12,19 @@ function MiniPalette(props) {
             key={color.name}
         />
     ))
+
+    const deletePalette = e => {
+        e.stopPropagation();
+        props.deletePalette(paletteName);
+    }
+
     return (
         <div className={classes.root} onClick={props.goToPalette}>
             <div className={classes.delete}>
-                <DeleteIcon className={classes.deleteIcon} />
+                <DeleteIcon 
+                    className={classes.deleteIcon}
+                    onClick={deletePalette} 
+                />
             </div>
             <div className={classes.colors}>
                 {miniColorBoxes}
